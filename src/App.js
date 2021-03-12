@@ -56,10 +56,26 @@ class App extends Component {
     this.addJob = this.addJob.bind(this);
     this.removeJob = this.removeJob.bind(this);
     this.buildStructure = this.buildStructure.bind(this);
+    this.loadCookie = this.loadCookie.bind(this);
   }
 
   componentDidMount() {
     setTimeout(this.tick, 1000)
+  }
+
+  saveCookie(state){
+    console.log('Saved!')
+    document.cookie = `rnrData=${btoa(JSON.stringify(state))}`
+  }
+
+  loadCookie(){
+    let cookie = document.cookie.match("rnrData=[^&]+")[0]
+    if (!cookie)
+      return
+    console.log(cookie)
+    this.setState({
+      ...JSON.parse(atob(cookie.split('rnrData=')[1]))
+    })
   }
 
   tick(){
@@ -93,12 +109,14 @@ class App extends Component {
         itemStock.robots += 1;
       }
     }
-
-    this.setState({
+    const newState = {
       time: this.state ? this.state.time + 1 : 1,
       itemStock: itemStock,
       crystalCooldownRate: crystalCooldownRate
-    },() => setTimeout(this.tick, 1000));
+    }
+    
+    this.state.autoSave && newState.time % 5 == 0 && this.saveCookie(newState)
+    this.setState(newState,() => setTimeout(this.tick, 1000));
   }
 
   incrStock(name, amt) {
@@ -222,7 +240,20 @@ class App extends Component {
           <div className="pure-g">
             <div className="pure-u-1">
               <h1>Robots and Resources</h1>
-              <small>Day {this.state.time}</small>
+              <div className='pure-g'>
+                <div className='pure-u-4-5'>
+                  <small>Day {this.state.time}</small>
+                </div>
+                <div className='pure-u-1-5'>
+                  <fieldset>
+                    <button onClick={() => this.saveCookie(this.state)}>Save</button>
+                    <button onClick={this.loadCookie}>Load</button>
+                    <label htmlFor="autosave" className="pure-checkbox"><input ref='save' id='autosave' type="checkbox" onClick={(e) => this.setState({autoSave: e.target.checked})}/>
+                      Autosave
+                    </label>
+                  </fieldset>
+                </div>
+              </div>
               <Menu/>
             </div>
             <div className="pure-u-1-3">

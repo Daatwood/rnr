@@ -9,7 +9,7 @@ class RobotJobs extends Component {
 
     return Object.keys(robots).map( (name) => {
       return (
-        <p>
+        <p key={name}>
           { name } {robots[name]}
           <button onClick={() => this.props.addJob(name)}>+</button>
           <button onClick={() => this.props.removeJob(name)}>-</button>

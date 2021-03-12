@@ -11,8 +11,8 @@ class RobotJobs extends Component {
       return (
         <p key={name}>
           { name } {robots[name]}
-          <button onClick={() => this.props.addJob(name)}>+</button>
-          <button onClick={() => this.props.removeJob(name)}>-</button>
+          <button className='button-xsmall pure-button' onClick={() => this.props.addJob(name)}>+</button>
+          <button className='pure-button button-xsmall' onClick={() => this.props.removeJob(name)}>-</button>
         </p>
       )
     })

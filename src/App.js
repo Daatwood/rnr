@@ -179,12 +179,16 @@ class App extends Component {
     })
   }
 
+  canBuild(name, cost){
+    return this.state.itemStock[name] && this.state.itemStock[name] >= cost
+  }
+
   buildStructure(building){
     const cost = this.calculateBuildingCost(building)
     const itemName = Object.keys(cost)[0]
     const itemCost = Object.values(cost)[0].toFixed(0)
 
-    if (this.state.itemStock[itemName] && this.state.itemStock[itemName] >= itemCost) {
+    if (this.canBuild(itemName, itemCost)) {
       const count = this.state.buildings[building] || 0;
       this.setState({
         itemStock:{
@@ -201,8 +205,18 @@ class App extends Component {
 
   buildingLink(name) {
     let cost = this.calculateBuildingCost(name)
-    
-    return <p key={name}><button onClick={() => this.buildStructure(name)}>{name} {this.state.buildings[name]} {Object.keys(cost)[0]}:{Object.values(cost)[0].toFixed(0)}</button></p>
+    const itemName = Object.keys(cost)[0]
+    const itemCost = Object.values(cost)[0].toFixed(0)
+    let classes = 'pure-button button-small'
+    if (!this.canBuild(itemName, itemCost))
+      classes +=' button-error'
+    return (
+      <p key={name}>
+        <button className={classes} onClick={() => this.buildStructure(name)}>
+          {name} {this.state.buildings[name]} {Object.keys(cost)[0]}:{Object.values(cost)[0].toFixed(0)}
+        </button>
+      </p>
+    )
   }
 
   totalWorking() {
@@ -245,13 +259,14 @@ class App extends Component {
                   <small>Day {this.state.time}</small>
                 </div>
                 <div className='pure-u-1-5'>
-                  <fieldset>
-                    <button onClick={() => this.saveCookie(this.state)}>Save</button>
-                    <button onClick={this.loadCookie}>Load</button>
-                    <label htmlFor="autosave" className="pure-checkbox"><input ref='save' id='autosave' type="checkbox" onClick={(e) => this.setState({autoSave: e.target.checked})}/>
+                  <div>
+                    <label htmlFor="autosave" className="pure-checkbox"><input id='autosave' type="checkbox" onClick={(e) => this.setState({autoSave: e.target.checked})}/>
                       Autosave
                     </label>
-                  </fieldset>
+                  </div>
+
+                  <button className='button-xsmall pure-button' onClick={() => this.saveCookie(this.state)}>Save</button>
+                  <button className='button-xsmall pure-button' onClick={this.loadCookie}>Load</button>
                 </div>
               </div>
               <Menu/>
@@ -259,10 +274,10 @@ class App extends Component {
             <div className="pure-u-1-3">
               <h2>Resources</h2>
               <p>
-                <button onClick={() => this.incrStock('heat', Math.random())}>Capture Heat</button>
+                <button className='pure-button button-large' onClick={() => this.incrStock('heat', Math.random())}>Capture Heat</button>
               </p>
               <p>
-                <button onClick={() => this.incrStock('scrap', Math.random())}>Salvage</button>
+                <button className='pure-button button-large' onClick={() => this.incrStock('scrap', Math.random())}>Salvage</button>
               </p>
               <ResourceList items={this.state.itemStock} rates={this.state.stockRate}/>
             </div>

@@ -1,6 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 
+import GameView from './views/game'; 
 import ResourceList from './ResourceList'
 import Menu from './Menu'
 import RobotJobs from './RobotJobs'
@@ -60,7 +61,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(this.tick, 1000)
+    // setTimeout(this.tick, 1000)
   }
 
   saveCookie(state){
@@ -249,48 +250,51 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="pure-g">
-            <div className="pure-u-1">
-              <h1>Robots and Resources</h1>
-              <div className='pure-g'>
-                <div className='pure-u-4-5'>
-                  <small>Day {this.state.time}</small>
-                </div>
-                <div className='pure-u-1-5'>
-                  <div>
-                    <label htmlFor="autosave" className="pure-checkbox"><input id='autosave' type="checkbox" onClick={(e) => this.setState({autoSave: e.target.checked})}/>
-                      Autosave
-                    </label>
-                  </div>
-
-                  <button className='button-xsmall pure-button' onClick={() => this.saveCookie(this.state)}>Save</button>
-                  <button className='button-xsmall pure-button' onClick={this.loadCookie}>Load</button>
-                </div>
-              </div>
-              <Menu/>
-            </div>
-            <div className="pure-u-1-3">
-              <h2>Resources</h2>
-              <p>
-                <button className='pure-button button-large' onClick={() => this.incrStock('heat', Math.random())}>Capture Heat</button>
-              </p>
-              <p>
-                <button className='pure-button button-large' onClick={() => this.incrStock('scrap', Math.random())}>Salvage</button>
-              </p>
-              <ResourceList items={this.state.itemStock} rates={this.state.stockRate}/>
-            </div>
-            <div className="pure-u-1-3">
-              <h2>Buildings</h2>
-              { this.state.buildingTypes.map((name) => this.buildingLink(name) ) }
-            </div>
-            <div className="pure-u-1-3">
-              <RobotJobs addJob={this.addJob} removeJob={this.removeJob} robots={this.state.robots} free={this.state.itemStock.robots - this.totalWorking() || ''} />
-            </div>
-          </div>
-        </header>
+      <div className='container'>
+        <GameView />
       </div>
+      // <div className="App">
+      //   <header className="App-header">
+      //     <div className="pure-g">
+      //       <div className="pure-u-1">
+      //         <h1>Robots and Resources</h1>
+      //         <div className='pure-g'>
+      //           <div className='pure-u-4-5'>
+      //             <small>Day {this.state.time}</small>
+      //           </div>
+      //           <div className='pure-u-1-5'>
+      //             <div>
+      //               <label htmlFor="autosave" className="pure-checkbox"><input id='autosave' type="checkbox" onClick={(e) => this.setState({autoSave: e.target.checked})}/>
+      //                 Autosave
+      //               </label>
+      //             </div>
+
+      //             <button className='button-xsmall pure-button' onClick={() => this.saveCookie(this.state)}>Save</button>
+      //             <button className='button-xsmall pure-button' onClick={this.loadCookie}>Load</button>
+      //           </div>
+      //         </div>
+      //         <Menu/>
+      //       </div>
+      //       <div className="pure-u-1-3">
+      //         <h2>Resources</h2>
+      //         <p>
+      //           <button className='pure-button button-large' onClick={() => this.incrStock('heat', Math.random())}>Capture Heat</button>
+      //         </p>
+      //         <p>
+      //           <button className='pure-button button-large' onClick={() => this.incrStock('scrap', Math.random())}>Salvage</button>
+      //         </p>
+      //         <ResourceList items={this.state.itemStock} rates={this.state.stockRate}/>
+      //       </div>
+      //       <div className="pure-u-1-3">
+      //         <h2>Buildings</h2>
+      //         { this.state.buildingTypes.map((name) => this.buildingLink(name) ) }
+      //       </div>
+      //       <div className="pure-u-1-3">
+      //         <RobotJobs addJob={this.addJob} removeJob={this.removeJob} robots={this.state.robots} free={this.state.itemStock.robots - this.totalWorking() || ''} />
+      //       </div>
+      //     </div>
+      //   </header>
+      // </div>
     );
   }
 

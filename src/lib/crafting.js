@@ -1,6 +1,19 @@
 import {crystals, metals, rocks, robots, machines} from './resources'
 import {randomSel} from './game'
 
+// result = [requirements]
+export const recipes = () => {
+  return {
+    'ember': ['blaze']
+  }
+}
+
+// Items combined with a heat
+export const extractorRecipes = () => {
+
+}
+
+
 /*
  Extract: "Drag an item from grid into the EXTRACTOR." 
  removes 1 item from stack and creates 1 results from matching item results
@@ -8,13 +21,16 @@ import {randomSel} from './game'
 */
 export const extractorList = () => {
   return {
-    heat: [],
+    heat: [], // Three heats produce a blaze; blaze combined with metal crystal or rock to unlock their next 
+    // -- requires heat
     scrap: ['metal', 'rock'],
     junk: ['crystal', 'metal'],
     rubble: ['rock', 'crystal'],
+    // -- requires blaze to unlock specs
     metal: metals(),
     crystal: crystals(),
     rock: rocks(),
+    // -- requires energy to 'activate'
     robot: robots(),
     machine: machines()
   }

@@ -42,6 +42,7 @@ export const rocks = () => {
 export const essences = () => {
   return [
     'heat', 
+    'blaze',
     'energy',
     'bacterium',
     'matter'

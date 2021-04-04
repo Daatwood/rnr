@@ -90,7 +90,7 @@ class GameView extends Component {
             <br/>
             Cooking Time: Each item requires X amount of essence to process
             <br/>
-            Upgrades: more than one processors
+            Upgrades: more than one processors (cooking more than 1 item at a time)
           </p>
           <Inventory items={this.state['inventory']} selected={this.state.selectedItems} itemCallback={this.selectItem} extracting={this.state.extracting}/>
         </div>

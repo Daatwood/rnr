@@ -14,8 +14,8 @@ class Inventory extends Component {
           <Item key={index} 
             name={item} 
             color={render.colorFromItem(item)}
-            icon={render.iconFromItem(item)} 
-            count={''} 
+            icon={render.iconFromItem(item)}
+            count={''}
             selected={selected && selected.indexOf(index) > -1}
             extracting={extracting && extracting.indexOf(index) > -1}
             clicked={() => this.props.itemCallback(index)}

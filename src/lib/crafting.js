@@ -1,18 +1,5 @@
 import {crystals, metals, rocks, robots, machines} from './resources'
-import {randomSel} from './game'
-
-// result = [requirements]
-export const recipes = () => {
-  return {
-    'ember': ['blaze']
-  }
-}
-
-// Items combined with a heat
-export const extractorRecipes = () => {
-
-}
-
+import {randomSel} from './util'
 
 /*
  Extract: "Drag an item from grid into the EXTRACTOR." 
@@ -40,11 +27,12 @@ export const extractorList = () => {
 export const tryExtraction = (selections, inventory, gameState) => {
   // Select all items
   const items = selections.map((idx) => inventory[idx])
-  if (!checkItemSelection(items))
+  if (!checkItemSelection(items)){
+    console.log('not transmutable')
     return gameState
+  }
 
-  console.log('flag transmute')
-
+    
   // moves from selection to extraction; locking the item
   return {
     ...gameState,
@@ -53,24 +41,6 @@ export const tryExtraction = (selections, inventory, gameState) => {
     selectedItems: []
   }
 }
-
-// // kills heat and extracts selections
-// export const performExtraction = (selections, inventory, gameState) => {
-//   // Select all items
-//   const items = selections.map((idx) => inventory[idx])
-//   if (!checkItemSelection(items))
-//     return gameState
-
-//   console.log('lets trasmute')
-
-//   // moves from selection to extraction; locking the item
-//   return {
-//     ...gameState,
-//     extracting: selections,
-//     heatLevel: 9000,
-//     selectedItems: []
-//   }
-// }
 
 // Returns new item and count
 export const extractFromItem = (item) => {

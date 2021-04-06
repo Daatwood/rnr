@@ -42,6 +42,7 @@ export const rocks = () => {
 export const essences = () => {
   return [
     'heat', 
+    'ember',
     'blaze',
     'energy',
     'bacterium',
@@ -92,7 +93,10 @@ export const robots = () => {
     'overseer',
     'tactical',
     'berserker',
-    'combantant'
+    'combantant',
+    'engineer',
+    'metallurgist',
+    'technician'
   ]
 }
 // Buildable and is ran by robots or player

@@ -1,24 +1,15 @@
 import '../styles/game.css';
 
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBurn, faFire, faCannabis } from '@fortawesome/free-solid-svg-icons'
-
-import {randomSalvage, onExtractItem, onGameTick } from '../lib/game'
+import {randomSalvage, onExtractItem, onGameTick, newState } from '../lib/game'
 import {tryExtraction } from '../lib/crafting'
 import Inventory from '../components/inventory';
+import ActionButton from '../components/action_button';
 
 class GameView extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      lastTick: Date.now(),
-      inventory: [],
-      extracting: [],
-      heatLevel: 0,
-      selectedItems: [],
-      ignite: undefined
-    };
+    this.state = newState()
     this.onExtract = this.onExtract.bind(this);
     this.selectItem = this.selectItem.bind(this);
     this.tick = this.tick.bind(this);
@@ -73,34 +64,20 @@ class GameView extends Component {
     const {ignite} = this.state;
 
     return (
-      <div>
+      <div className='container'>
+        <p className='white-text'>
+          Press Ignite to get started.
+        </p>
         <div className="item-content grey darken-3">
-          <p className='white-text'>
-            Select an item and heat to begin extraction process
-            <br/>
-            TODO:
-            <br/>
-            Selection: Select only the same types. Select upto 3 of same type (or more with research)
-            <br/>
-            Extraction: Select items then select heat to reveal inner resource
-            <br/>
-            Refinement : select items then select bacterium to upgrade quality
-            <br/>
-            Salvage: Clicking the button will add an item. Clicking on that new item will reveal itself
-            <br/>
-            Cooking Time: Each item requires X amount of essence to process
-            <br/>
-            Upgrades: more than one processors (cooking more than 1 item at a time)
-          </p>
           <Inventory items={this.state['inventory']} selected={this.state.selectedItems} itemCallback={this.selectItem} extracting={this.state.extracting}/>
         </div>
         <div className='row'>
           <div className='col s6'>
-            {<a className={`waves-effect waves-red btn-flat ${!!ignite ? 'disabled': ''}`} onClick={() => this.setState({ignite: 5})}>Ignite</a>}
-            {ignite != undefined && <a className={`waves-effect waves-orange btn-flat right ${!ignite ? 'disabled': ''}`} onClick={() => this.onCaptureHeat(ignite-1)}>Capture Heat</a>}
+            <ActionButton text='Ignite' classes='waves-red' disabled={!!ignite} onClick={() => this.setState({ignite: 5})} />
+            <ActionButton text='Capture Heat' classes='right waves-orange' disabled={!ignite} onClick={() => this.onCaptureHeat(ignite-1)} hidden={ignite === undefined}/>
           </div>
           <div className='col s6'>
-            { ignite != undefined && <a className={`waves-effect waves-teal btn-flat ${!ignite ? 'disabled' : ''}`}  onClick={() => this.onSalvage(ignite-1)}>Salvage</a>}
+            <ActionButton text='Find Salvage' classes='waves-teal' disabled={!ignite} onClick={() =>  this.onSalvage(ignite-1)} hidden={ignite === undefined}/>
           </div>
           <div className='col s12'>
             <div className="progress red lighten-4">

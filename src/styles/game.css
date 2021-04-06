@@ -19,6 +19,11 @@ html {
     width: 80%;
   }
 }
+
+body {
+  background-color: rgb(139, 163, 209);
+}
+
 .game-view .card-content {
   color: white;
 }

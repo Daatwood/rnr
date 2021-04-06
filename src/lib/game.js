@@ -1,20 +1,21 @@
 import { piles } from "./resources"
 import { extractFromItem } from './crafting'
+import { randomSel } from './util'
 
-export const initWorld = () => {
+export const newState = () => {
   return {
-    time: 0,
-    unlocked: [], // list of unlocked resources
-    inventory: ['energy:10']
+    lastTick: Date.now(),
+    inventory: [],
+    extracting: [],
+    heatLevel: 0,
+    selectedItems: [],
+    ignite: undefined
   }
 }
 
+// Game Action Buttons
 export const randomSalvage = () => {
-  return piles()[Math.floor(Math.random() * piles().length)]
-}
-
-export const randomSel = (selections) => {
-  return selections[Math.floor(Math.random() * selections.length)]
+  return randomSel(piles())
 }
 
 export const onExtractItem = (itemIndex, gameState) => {
@@ -48,7 +49,6 @@ export const onGameTick = (gameState) => {
     let newItems = extracting.map((itemIndex) => {
       return extractFromItem(inventory[itemIndex])
     })
-    console.log(newItems)
     extracting.forEach((itemIndex, index) => {
       newInventory[itemIndex] = newItems[index]
     });

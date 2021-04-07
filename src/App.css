@@ -1,0 +1,18 @@
+.action-button-red {
+  border: #b71c1c  1px solid;
+  border-radius: 5px;
+}
+
+.action-button-orange {
+  border: #ff9800   1px solid;
+  border-radius: 5px;
+}
+
+.action-button-teal {
+  border: #009688   1px solid;
+  border-radius: 5px;
+}
+
+.disabled {
+  border-style: none;
+}

@@ -110,11 +110,11 @@ body {
 }
 .item-content {
   overflow-y: auto;
-  height: 50vh;
+  height: 50%;
+  max-height: 195px;
   margin: 0 15px 40px 1px;
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  background-color: whitesmoke;
 }
 .item-content .item-grid {
   min-height: 54px;
@@ -137,11 +137,11 @@ body {
   flex: 1 1 5vh;
   border: #bdbdbd solid 0.125em;
   background-color: whitesmoke;
-  max-width: 3.5vh;
+  max-width: 4.5vh;
   height: 5vh;
   font-size: 2.7vh;
   text-align: center;
-  margin: 1%;
+  margin: 8px;
   cursor: default;
 }
 .item-content .item-border .item {

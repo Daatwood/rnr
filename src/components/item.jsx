@@ -9,9 +9,9 @@ class Item extends Component {
     let classes = selected ? ' selected' : ''
     classes += extracting ? ' orange darken-2' : ''
     return (
-      <div className={color+' item-border'+classes} onClick={() => this.props.clicked()}>
+      <div className={color+' item-border '+classes} onClick={() => this.props.clicked()}>
         <div className={`item item-${name}` }>
-          <FontAwesomeIcon icon={icon} />
+          {icon && <FontAwesomeIcon icon={icon} />}
         </div> 
         <div className='count'>
           <small style={{fontSize: '10px'}}>{name}</small>

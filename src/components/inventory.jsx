@@ -6,12 +6,32 @@ import Item from './item'
 import * as render from '../lib/render'
 
 class Inventory extends Component {
+
+  renderEmptySpaces(amt){
+    let spaces = []
+    for (let index = 0; index < amt; index++) {
+      spaces[index] = (
+        <Item key={`e-${index}`} 
+          name='' 
+          color=''
+          icon=''
+          count=''
+          classes='undiscovered'
+          selected={false}
+          extracting={false}
+          clicked={() => console.log('click empty')}
+        />
+      )
+    }
+    return spaces
+  }
+
   render(){
-    const { items, selected, extracting } = this.props;
+    const { items, selected, extracting, limit } = this.props;
     return (
       <div className='item-grid'> 
         { items.map((item, index) => (
-          <Item key={index} 
+          <Item key={`f-${index}`}
             name={item} 
             color={render.colorFromItem(item)}
             icon={render.iconFromItem(item)}
@@ -21,6 +41,7 @@ class Inventory extends Component {
             clicked={() => this.props.itemCallback(index)}
           />
         )) }
+        { this.renderEmptySpaces(limit-items.length) }
       </div>
     )
   }

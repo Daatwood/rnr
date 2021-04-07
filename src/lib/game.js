@@ -9,14 +9,52 @@ export const newState = () => {
     extracting: [],
     heatLevel: 0,
     selectedItems: [],
-    ignite: undefined
+    ignite: undefined,
+    igniteAction: 5,
+    igniteMin: 0,
+    captureHeatCost: 1,
+    findSalvageCost: 1,
   }
 }
 
-// Game Action Buttons
-export const randomSalvage = () => {
-  return randomSel(piles())
+
+///-- Actions
+
+export const actionIgnite = (state) => {
+  if (state.ignite > state.igniteMin)
+    return state;
+
+  return {
+    ...state,
+    ignite: state.igniteAction
+  }
 }
+
+export const actionCaptureHeat = (state) => {
+  if (state.ignite < state.captureHeatCost)
+    return state;
+
+  return {
+    ...state,
+    ignite: state.ignite - state.captureHeatCost,
+    inventory: [...state.inventory, 'heat']
+  }
+}
+
+export const actionFindSalvage = (state) => {
+  if (state.ignite < state.findSalvageCost)
+    return state;
+
+  return {
+    ...state,
+    ignite: state.ignite - state.findSalvageCost,
+    inventory: [...state.inventory, randomSel(piles())]
+  }
+}
+
+
+
+///-- Item Extraction
 
 export const onExtractItem = (itemIndex, gameState) => {
   const { inventory } = gameState;
